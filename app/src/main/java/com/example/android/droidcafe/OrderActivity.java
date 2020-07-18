@@ -19,6 +19,7 @@ package com.example.android.droidcafe;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -47,8 +48,6 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-        final_text = (TextView) findViewById(R.id.final_result);
-        final_text.setEnabled(false);
 
         // Get the intent and its data.
         Intent intent = getIntent();
@@ -57,78 +56,6 @@ public class OrderActivity extends AppCompatActivity {
         textView.setText(message);
 
     }
-
-    public void onCheckBoxClicked(View view) {
-        boolean checked = ((CheckBox) view).isChecked();
-        switch (view.getId()) {
-
-            case R.id.ch1:
-
-                if (checked) {
-                    selection.add("Chocolate syrup");
-                }
-                else{
-                    selection.remove("Chocolate syrup");
-                }
-                break;
-
-            case R.id.ch2:
-
-                if (checked) {
-                    selection.add("Sprinkles");
-                }
-                else{
-                    selection.remove("Sprinkles");
-                }
-                break;
-
-            case R.id.ch3:
-
-                if (checked) {
-                    selection.add("Crushed nuts");
-                }
-                else{
-                    selection.remove("Crushed nuts");
-                }
-                break;
-
-            case R.id.ch4:
-
-                if (checked) {
-                    selection.add("Orio cookies crumbles");
-                }
-                else{
-                    selection.remove("Orio cookies crumbles");
-                }
-                break;
-
-            case R.id.ch5:
-
-                if (checked) {
-                    selection.add("Cherries");
-                }
-                else{
-                    selection.remove("Cherries");
-                }
-                break;
-
-        }
-    }
-
-    public void onButtonClicked(View view) {
-        String Toast_button = "Toppings:";
-
-        for (String Selections : selection)
-        {
-
-            Toast_button = Toast_button + Selections;
-
-        }
-        final_text.setText(Toast_button);
-        final_text.setEnabled(true);
-    }
-
-
 
 
     public void displayToast(String message) {
@@ -163,5 +90,35 @@ public class OrderActivity extends AppCompatActivity {
         }
     }
 
+
+    public void showDatePicker(View  view) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(),
+                getString(R.string.datepicker));
+    }
+
+    /**
+     * Process the date picker result into strings that can be displayed in
+     * a Toast.
+     *
+     * @param year Chosen year
+     * @param month Chosen month
+     * @param day Chosen day
+     */
+    public void processDatePickerResult(int year, int month, int day) {
+        String month_string = Integer.toString(month + 1);
+        String day_string = Integer.toString(day);
+        String year_string = Integer.toString(year);
+        String dateMessage = (month_string +
+                "/" + day_string +
+                "/" + year_string);
+
+        Toast.makeText(this, getString(R.string.date) + dateMessage,
+                Toast.LENGTH_SHORT).show();
+    }
+
 }
+
+
+
 

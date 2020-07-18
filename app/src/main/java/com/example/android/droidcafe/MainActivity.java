@@ -19,6 +19,7 @@ package com.example.android.droidcafe;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -93,17 +94,37 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch ( item.getItemId()){
+            case R.id.action_order:
+                Intent intent = new Intent(MainActivity.this,OrderActivity.class);
+                intent.putExtra(EXTRA_MESSAGE,mOrderMessage);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_status:
+                displayToast(getString(R.string.status_message));
+                return true;
+
+            case R.id.action_favorites:
+                displayToast(getString(R.string.favorites_message));
+                return true;
+
+            case R.id.action_contact:
+                displayToast(getString(R.string.contact_message));
+                return true;
+
+            default://do nothing
+
+        }
 
         // This comment suppresses the Android Studio warning about simplifying
         // the return statements.
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * Displays a Toast with the message.
@@ -138,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
         mOrderMessage = getString(R.string.froyo_order_message);
         displayToast(mOrderMessage);
     }
+
 
 
     }
